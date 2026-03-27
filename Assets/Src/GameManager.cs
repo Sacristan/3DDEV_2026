@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        uncollectedPickables = new(FindObjectsByType<Pickable>(FindObjectsSortMode.None));
+        Pickable[] collectables = FindObjectsByType<Pickable>(FindObjectsSortMode.None);
+        uncollectedPickables = new(collectables);
     }
 
     public void OnPickableCollected(Pickable pickable)
