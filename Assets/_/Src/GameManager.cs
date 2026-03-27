@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private List<Pickable> uncollectedPickables;
+    private List<Pickable> uncollectedPickables = new();
 
     private void Awake()
     {
