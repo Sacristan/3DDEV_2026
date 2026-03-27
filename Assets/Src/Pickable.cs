@@ -16,7 +16,17 @@ public class Pickable : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Debug.Log($"{nameof(Pickable)} trigger zone entered by {other.gameObject.name}", other.gameObject);
-        Destroy(gameObject);
+
+        // if (other.gameObject.CompareTag("Player"))
+        // {
+        // }
+        
+        if (other.gameObject.TryGetComponent<Player>(out var player))
+        {
+            Destroy(gameObject);
+        }
+        
+
     }
 
 }
