@@ -119,24 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &82664573 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1263424622664529202, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
-  m_PrefabInstance: {fileID: 6675887208201063593}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &82664576
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82664573}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a05d65e0c68adb34082cd4958d59875e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  closeEnoughDistance: 1.5
 --- !u!1 &108305496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,10 +1530,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Policeman
       objectReference: {fileID: 0}
-    - target: {fileID: 1263424622664529202, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 7643716503845844230, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.17
@@ -1592,17 +1570,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8111882903369843732, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1263424622664529202, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 82664576}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fd4745a76e21b040b1a5ef17d604c0c, type: 3}
 --- !u!1001 &7288094137546172433
 PrefabInstance:
