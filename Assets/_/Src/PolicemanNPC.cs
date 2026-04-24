@@ -8,11 +8,13 @@ public class PolicemanNPC : MonoBehaviour
 
     private NavMeshAgent _agent;
     private Player _player;
+    private Animator _animator;
 
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _player = FindAnyObjectByType<Player>();
+        _animator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -21,12 +23,18 @@ public class PolicemanNPC : MonoBehaviour
 
         if (distance > closeEnoughDistance)
         {
-            _agent.isStopped = false;
             _agent.SetDestination(_player.transform.position);
+            UpdateMovement(isMoving: true);
         }
         else
         {
-            _agent.isStopped = true;
+            UpdateMovement(isMoving: false);
         }
+    }
+
+    void UpdateMovement(bool isMoving)
+    {
+        _agent.isStopped = !isMoving;
+        _animator.SetBool("IsWalking", isMoving);
     }
 }
