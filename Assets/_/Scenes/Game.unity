@@ -816,7 +816,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1719265826
 Transform:
@@ -1650,6 +1650,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 108305497}
+  - {fileID: 1719265826}
   - {fileID: 2114283753834967213}
   - {fileID: 2084445384}
   - {fileID: 60889539378096550}
@@ -1661,4 +1662,3 @@ SceneRoots:
   - {fileID: 1028166828}
   - {fileID: 848588212}
   - {fileID: 6675887208201063593}
-  - {fileID: 1719265826}
