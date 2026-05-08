@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class PolicemanNPC : MonoBehaviour
 {
+    public event System.Action OnReachedTarget; 
+    
     [SerializeField] private float closeEnoughDistance = 0.5f;
 
     private NavMeshAgent _agent;
@@ -28,8 +30,14 @@ public class PolicemanNPC : MonoBehaviour
         }
         else
         {
-            UpdateMovement(isMoving: false);
+            ReachedTarget();
         }
+    }
+
+    void ReachedTarget()
+    {
+        UpdateMovement(isMoving: false);
+        OnReachedTarget?.Invoke();
     }
 
     void UpdateMovement(bool isMoving)

@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private List<Pickable> uncollectedPickables = new();
 
     [SerializeField] private float gameWonRestartTimer = 3f;
 
-    private bool isGameWon = false;
+    private PolicemanNPC _policemanNpc;
+    private List<Pickable> uncollectedPickables = new();
+
+    private bool isGameOver = false;
 
     private void Awake()
     {
@@ -22,6 +24,9 @@ public class GameManager : MonoBehaviour
     {
         Pickable[] collectables = FindObjectsByType<Pickable>(FindObjectsSortMode.None);
         uncollectedPickables = new(collectables);
+
+        _policemanNpc = FindAnyObjectByType<PolicemanNPC>();
+        _policemanNpc.OnReachedTarget += PolicemanNpcOnOnReachedTarget;
     }
 
     public void OnPickableCollected(Pickable pickable)
@@ -32,20 +37,35 @@ public class GameManager : MonoBehaviour
         if (uncollectedPickables.Count == 0) GameWon();
     }
 
-    void GameWon()
+    void PolicemanNpcOnOnReachedTarget()
     {
-        if (isGameWon) return;
-
-        isGameWon = true;
-        Debug.Log("VICTORY");
-        StartCoroutine(GameWonRoutine());
+        _policemanNpc.OnReachedTarget -= PolicemanNpcOnOnReachedTarget;
+        GameLost();
     }
 
-    IEnumerator GameWonRoutine()
+    void GameWon()
+    {
+        Debug.Log("VICTORY");
+        GameOver();
+    }
+
+    void GameLost()
+    {
+        Debug.Log("YOU LOSE!");
+        GameOver();
+    }
+
+    void GameOver()
+    {
+        if (isGameOver) return;
+        isGameOver = true;
+        StartCoroutine(RestartGameRoutine());
+    }
+
+    IEnumerator RestartGameRoutine()
     {
         Debug.Log("Trigger Restart Started");
         yield return new WaitForSeconds(gameWonRestartTimer);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    
 }
