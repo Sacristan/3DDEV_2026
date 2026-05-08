@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Pickable : MonoBehaviour
@@ -8,6 +9,19 @@ public class Pickable : MonoBehaviour
     //     Debug.Log($"{nameof(Pickable)} collided with {collision.gameObject.name}", collision.gameObject);
     // }
 
+    void Start()
+    {
+        StartCoroutine(Routine());
+    }
+
+    IEnumerator Routine()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    
     void OnTriggerEnter(Collider other)
     {
         // Debug.Log($"{nameof(Pickable)} trigger zone entered by {other.gameObject.name}", other.gameObject);
