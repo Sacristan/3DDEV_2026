@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour
 
     private bool isGameOver = false;
 
+    public int CollectedCollectablesCount => TotalCollectablesCount - uncollectedPickables.Count;
+    public int TotalCollectablesCount { get; private set; }
+    public bool IsReady { get; private set; }
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -23,10 +27,14 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Pickable[] collectables = FindObjectsByType<Pickable>(FindObjectsSortMode.None);
+        TotalCollectablesCount = collectables.Length;
+
         uncollectedPickables = new(collectables);
 
         _policemanNpc = FindAnyObjectByType<PolicemanNPC>();
         _policemanNpc.OnReachedTarget += PolicemanNpcOnOnReachedTarget;
+
+        IsReady = true;
     }
 
     public void OnPickableCollected(Pickable pickable)

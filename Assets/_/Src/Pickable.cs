@@ -4,24 +4,13 @@ using UnityEngine;
 
 public class Pickable : MonoBehaviour
 {
+    public static event System.Action<Pickable> OnPicked;
+    
     // void OnCollisionEnter(Collision collision)
     // {
     //     Debug.Log($"{nameof(Pickable)} collided with {collision.gameObject.name}", collision.gameObject);
     // }
 
-    void Start()
-    {
-        StartCoroutine(Routine());
-    }
-
-    IEnumerator Routine()
-    {
-        while (true)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-    }
-    
     void OnTriggerEnter(Collider other)
     {
         // Debug.Log($"{nameof(Pickable)} trigger zone entered by {other.gameObject.name}", other.gameObject);
@@ -37,6 +26,7 @@ public class Pickable : MonoBehaviour
     {
         // FindAnyObjectByType<GameManager>().OnPickableCollected(this);
         GameManager.instance.OnPickableCollected(this);
+        OnPicked?.Invoke(this);
         Destroy(gameObject);
     }
 }
