@@ -7,7 +7,7 @@ public class PolicemanNPC : MonoBehaviour
 {
     public event System.Action OnReachedTarget;
     public event System.Action OnStartedFollowing;
-    
+
     [SerializeField] private float closeEnoughDistance = 0.5f;
 
     private NavMeshAgent _agent;
@@ -18,7 +18,8 @@ public class PolicemanNPC : MonoBehaviour
     {
         None,
         FollowingTarget,
-        ReachedTarget
+        ReachedTarget,
+        Celebrating
     }
 
     private PolicemanState _state = PolicemanState.None;
@@ -42,13 +43,15 @@ public class PolicemanNPC : MonoBehaviour
         _player = FindAnyObjectByType<Player>();
         _animator = GetComponentInChildren<Animator>();
 
+        _player.OnCapturedByPoliceman += OnPlayerCapturedByPolicemanCallback;
+
         yield return new WaitForSeconds(3f);
         CurrentState = PolicemanState.FollowingTarget;
     }
 
     private void Update()
     {
-        if (CurrentState == PolicemanState.None) return;
+        if (CurrentState == PolicemanState.None || CurrentState == PolicemanState.Celebrating) return;
 
         float distance = Vector3.Distance(transform.position, _player.transform.position);
 
@@ -67,10 +70,6 @@ public class PolicemanNPC : MonoBehaviour
     {
         UpdateMovement(isMoving: CurrentState == PolicemanState.FollowingTarget);
 
-        if (CurrentState == PolicemanState.ReachedTarget)
-        {
-        }
-
         switch (CurrentState)
         {
             case PolicemanState.ReachedTarget:
@@ -79,7 +78,15 @@ public class PolicemanNPC : MonoBehaviour
             case PolicemanState.FollowingTarget:
                 OnStartedFollowing?.Invoke();
                 break;
+            case PolicemanState.Celebrating:
+                _animator.SetTrigger("Celebrate");
+                break;
         }
+    }
+
+    private void OnPlayerCapturedByPolicemanCallback()
+    {
+        CurrentState = PolicemanState.Celebrating;
     }
 
     void UpdateMovement(bool isMoving)
