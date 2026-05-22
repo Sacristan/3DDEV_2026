@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    public event Action<bool> OnGameOver;
+    
     [SerializeField] private float gameWonRestartTimer = 3f;
 
     private PolicemanNPC _policemanNpc;
@@ -54,19 +55,20 @@ public class GameManager : MonoBehaviour
     void GameWon()
     {
         Debug.Log("VICTORY");
-        GameOver();
+        GameOver(isVictory: true);
     }
 
     void GameLost()
     {
         Debug.Log("YOU LOSE!");
-        GameOver();
+        GameOver(isVictory: false);
     }
 
-    void GameOver()
+    void GameOver(bool isVictory)
     {
         if (isGameOver) return;
         isGameOver = true;
+        OnGameOver?.Invoke(isVictory);
         StartCoroutine(RestartGameRoutine());
     }
 

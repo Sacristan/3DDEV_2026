@@ -1,28 +1,37 @@
 using System;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameUIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI collectedText;
+    [SerializeField] private GameObject gameWonContainer;
+    [SerializeField] private GameObject gameLostContainer;
 
     private IEnumerator Start()
     {
-        Pickable.OnPicked += PickableOnOnPicked;
+        Pickable.OnPicked += OnPickablePickedCallback;
+        GameManager.instance.OnGameOver += OnGameOverCallback;
+
         yield return new WaitUntil(() => GameManager.instance.IsReady);
         UpdateUI();
     }
-    
+
     private void OnDestroy()
     {
-        Pickable.OnPicked -= PickableOnOnPicked;
+        Pickable.OnPicked -= OnPickablePickedCallback;
     }
 
-    private void PickableOnOnPicked(Pickable obj)
+    private void OnPickablePickedCallback(Pickable obj)
     {
         UpdateUI();
+    }
+
+    private void OnGameOverCallback(bool isVictory)
+    {
+        if (isVictory) gameWonContainer.SetActive(true);
+        else gameLostContainer.SetActive(false);
     }
 
     void UpdateUI()
