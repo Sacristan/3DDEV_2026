@@ -28,6 +28,7 @@ public class ChickenPickable : Pickable
             {
                 _agent.SetDestination(wanderLoc);
                 UpdateMovement(true);
+                
                 yield return new WaitUntil(() => Vector3.Distance(transform.position, wanderLoc) < closeEnoughDistance);
             }
 
@@ -42,8 +43,8 @@ public class ChickenPickable : Pickable
         for (int i = 0; i < 30; i++)
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * range;
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+            
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
             {
                 result = hit.position;
                 return true;
