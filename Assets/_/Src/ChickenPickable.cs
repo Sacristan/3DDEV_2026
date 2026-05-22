@@ -2,16 +2,15 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ChickenPickable : Pickable
 {
-    private const float MinWaitingTime = 1f;
-    private const float MaxWaitingTime = 5f;
-
-    private const float WanderRange = 10f;
-
     [SerializeField] private float closeEnoughDistance = 0.5f;
+    [SerializeField] private float wanderRange = 10f;
+    [SerializeField] private float minWaitingTime = 1f;
+    [SerializeField] private float maxWaitingTime = 5f;
 
     NavMeshAgent _agent;
     Animator _animator;
@@ -23,9 +22,9 @@ public class ChickenPickable : Pickable
 
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(MinWaitingTime, MaxWaitingTime));
+            yield return new WaitForSeconds(Random.Range(minWaitingTime, maxWaitingTime));
 
-            if (GetRandomWanderPoint(transform.position, WanderRange, out Vector3 wanderLoc))
+            if (GetRandomWanderPoint(transform.position, wanderRange, out Vector3 wanderLoc))
             {
                 _agent.SetDestination(wanderLoc);
                 UpdateMovement(true);
@@ -54,7 +53,6 @@ public class ChickenPickable : Pickable
         result = Vector3.zero;
         return false;
     }
-
 
     void UpdateMovement(bool isMoving)
     {
