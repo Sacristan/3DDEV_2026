@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class PolicemanNPC : MonoBehaviour
 {
     public event System.Action OnReachedTarget;
-
+    public event System.Action OnStartedFollowing;
+    
     [SerializeField] private float closeEnoughDistance = 0.5f;
 
     private NavMeshAgent _agent;
@@ -68,7 +69,16 @@ public class PolicemanNPC : MonoBehaviour
 
         if (CurrentState == PolicemanState.ReachedTarget)
         {
-            OnReachedTarget?.Invoke();
+        }
+
+        switch (CurrentState)
+        {
+            case PolicemanState.ReachedTarget:
+                OnReachedTarget?.Invoke();
+                break;
+            case PolicemanState.FollowingTarget:
+                OnStartedFollowing?.Invoke();
+                break;
         }
     }
 

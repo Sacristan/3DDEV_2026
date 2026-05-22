@@ -2,13 +2,15 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI collectedText;
     [SerializeField] private GameObject gameWonContainer;
     [SerializeField] private GameObject gameLostContainer;
-
+    [SerializeField] private Image damageFXImage;
+    
     private IEnumerator Start()
     {
         Pickable.OnPicked += OnPickablePickedCallback;
@@ -31,7 +33,7 @@ public class GameUIManager : MonoBehaviour
     private void OnGameOverCallback(bool isVictory)
     {
         if (isVictory) gameWonContainer.SetActive(true);
-        else gameLostContainer.SetActive(false);
+        else gameLostContainer.SetActive(true);
     }
 
     void UpdateUI()

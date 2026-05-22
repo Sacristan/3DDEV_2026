@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     public event Action<bool> OnGameOver;
-    
+
     [SerializeField] private float gameWonRestartTimer = 3f;
 
-    private PolicemanNPC _policemanNpc;
+    private Player _player;
     private List<Pickable> uncollectedPickables = new();
 
     private bool isGameOver = false;
@@ -32,8 +32,9 @@ public class GameManager : MonoBehaviour
 
         uncollectedPickables = new(collectables);
 
-        _policemanNpc = FindAnyObjectByType<PolicemanNPC>();
-        _policemanNpc.OnReachedTarget += PolicemanNpcOnOnReachedTarget;
+
+        _player = FindAnyObjectByType<Player>();
+        _player.OnCapturedByPoliceman += OnPlayerGotCapturedByPolicemanCallback;
 
         IsReady = true;
     }
@@ -46,9 +47,9 @@ public class GameManager : MonoBehaviour
         if (uncollectedPickables.Count == 0) GameWon();
     }
 
-    void PolicemanNpcOnOnReachedTarget()
+    void OnPlayerGotCapturedByPolicemanCallback()
     {
-        _policemanNpc.OnReachedTarget -= PolicemanNpcOnOnReachedTarget;
+        _player.OnCapturedByPoliceman -= OnPlayerGotCapturedByPolicemanCallback;
         GameLost();
     }
 
