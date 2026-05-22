@@ -33,10 +33,8 @@ public class ChickenPickable : Pickable
             }
 
             UpdateMovement(false);
-            yield return null;
         }
     }
-
 
     bool GetRandomWanderPoint(Vector3 center, float range, out Vector3 result)
     {
