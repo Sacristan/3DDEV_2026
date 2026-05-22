@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using StarterAssets;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -9,16 +11,26 @@ public class Player : MonoBehaviour
     public System.Action OnPolicemanNearby;
     public System.Action OnPolicemanWentAway;
 
-    private PolicemanNPC _policemanNpc;
     [SerializeField] private float gameLostTimeWhenNearPoliceman = 5;
 
+    private FirstPersonController _playerController;
+    private PolicemanNPC _policemanNpc;
     Coroutine policemanNearbyRoutine;
 
     private void Start()
     {
+        _playerController = GetComponent<FirstPersonController>();
+
         _policemanNpc = FindAnyObjectByType<PolicemanNPC>();
         _policemanNpc.OnReachedTarget += PolicemanNpcOnReachedTargetCallback;
         _policemanNpc.OnStartedFollowing += PolicemanNpcOnStartedFollowingCallback;
+        
+        GameManager.instance.OnGameOver += OnGameOverCallback;
+    }
+    
+    void OnGameOverCallback(bool isVictory)
+    {
+        _playerController.enabled = false;
     }
 
     void PolicemanNpcOnReachedTargetCallback()
