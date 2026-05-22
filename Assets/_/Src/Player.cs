@@ -6,6 +6,9 @@ public class Player : MonoBehaviour
 {
     public System.Action OnCapturedByPoliceman;
 
+    public System.Action OnPolicemanNearby;
+    public System.Action OnPolicemanWentAway;
+
     private PolicemanNPC _policemanNpc;
     [SerializeField] private float gameLostTimeWhenNearPoliceman = 5;
 
@@ -22,12 +25,14 @@ public class Player : MonoBehaviour
     {
         Debug.Log(nameof(PolicemanNpcOnReachedTargetCallback));
         StopPlayerPolicemanNearbyDamageRoutine();
+        OnPolicemanNearby?.Invoke();
         policemanNearbyRoutine = StartCoroutine(PlayerPolicemanNearbyDamageRoutine());
     }
 
     void PolicemanNpcOnStartedFollowingCallback()
     {
         Debug.Log(nameof(PolicemanNpcOnStartedFollowingCallback));
+        OnPolicemanWentAway?.Invoke();
         StopPlayerPolicemanNearbyDamageRoutine();
     }
 

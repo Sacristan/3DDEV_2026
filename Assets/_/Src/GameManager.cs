@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
 
         uncollectedPickables = new(collectables);
 
-
         _player = FindAnyObjectByType<Player>();
         _player.OnCapturedByPoliceman += OnPlayerGotCapturedByPolicemanCallback;
 
